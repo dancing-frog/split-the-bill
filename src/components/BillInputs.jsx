@@ -43,7 +43,14 @@ function MoneyField({ label, value, onChange, mode, onModeChange, valueFieldName
         step="0.01"
         inputMode="decimal"
         value={value}
-        onChange={(event) => onChange(valueFieldName, event.target.value)}
+        onChange={(event) => {
+          let val = event.target.value;
+          if (val.startsWith('-')) val = val.substring(1);
+          onChange(valueFieldName, val);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === '-' || e.key === '+') e.preventDefault();
+        }}
         className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-base text-white outline-none transition-all placeholder:text-slate-500 focus:border-indigo-500/50 focus:bg-black/40 focus:ring-4 focus:ring-indigo-500/20"
         placeholder={mode === 'percent' ? '0' : '0.00'}
         aria-label={label}
@@ -83,7 +90,14 @@ function BillInputs({
             step="0.01"
             inputMode="decimal"
             value={billInputs.baseBill}
-            onChange={(event) => onBillValueChange('baseBill', event.target.value)}
+            onChange={(event) => {
+              let val = event.target.value;
+              if (val.startsWith('-')) val = val.substring(1);
+              onBillValueChange('baseBill', val);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === '-' || e.key === '+') e.preventDefault();
+            }}
             className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-base text-white outline-none transition-all placeholder:text-slate-500 focus:border-indigo-500/50 focus:bg-black/40 focus:ring-4 focus:ring-indigo-500/20"
             placeholder="0.00"
           />

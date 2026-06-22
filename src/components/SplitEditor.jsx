@@ -90,7 +90,14 @@ function SplitEditor({
                       step="0.01"
                       inputMode="decimal"
                       value={splitConfig.value}
-                      onChange={(event) => onPersonSplitChange(person.id, 'value', event.target.value)}
+                      onChange={(event) => {
+                        let val = event.target.value;
+                        if (val.startsWith('-')) val = val.substring(1);
+                        onPersonSplitChange(person.id, 'value', val);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === '-' || e.key === '+') e.preventDefault();
+                      }}
                       placeholder={splitConfig.mode === 'percent' ? '0' : '0.00'}
                       className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                     />

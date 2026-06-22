@@ -117,7 +117,14 @@ function SettlementSummary({
                   step="0.01"
                   inputMode="decimal"
                   value={amount}
-                  onChange={(event) => setAmount(event.target.value)}
+                  onChange={(event) => {
+                    let val = event.target.value;
+                    if (val.startsWith('-')) val = val.substring(1);
+                    setAmount(val);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === '-' || e.key === '+') e.preventDefault();
+                  }}
                   placeholder="Amount"
                   className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none transition-all placeholder:text-slate-500 focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/20"
                 />

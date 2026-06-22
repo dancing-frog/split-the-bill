@@ -159,7 +159,14 @@ function PeopleList({
                           step="0.01"
                           inputMode="decimal"
                           value={splitConfig.value}
-                          onChange={(event) => onPersonSplitChange(person.id, 'value', event.target.value)}
+                          onChange={(event) => {
+                            let val = event.target.value;
+                            if (val.startsWith('-')) val = val.substring(1);
+                            onPersonSplitChange(person.id, 'value', val);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === '+') e.preventDefault();
+                          }}
                           placeholder={splitConfig.mode === 'percent' ? '0' : '0.00'}
                           className="flex-1 rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none transition-all placeholder:text-slate-500 focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/20"
                         />
